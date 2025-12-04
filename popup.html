@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple Tab Deduplicate</title>
+    <link rel="stylesheet" href="popup.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">Simple Tab Deduplicate</p>
+        <button type="button" id="refresh-button" class="ghost">Refresh</button>
+      </header>
+
+      <section class="stats" aria-live="polite">
+        <article class="stat-card">
+          <p class="label">Total tabs</p>
+          <p class="value" data-field="totalTabs">-</p>
+        </article>
+        <article class="stat-card">
+          <p class="label">Duplicate sets</p>
+          <p class="value" data-field="duplicateSets">-</p>
+        </article>
+        <article class="stat-card">
+          <p class="label">Closable tabs</p>
+          <p class="value" data-field="possibleClosures">-</p>
+        </article>
+      </section>
+
+      <form id="controls-form" class="controls">
+        <fieldset>
+          <legend>Scope</legend>
+          <label>
+            <input type="radio" name="scope" value="all-windows" />
+            All windows
+          </label>
+          <label>
+            <input type="radio" name="scope" value="current-window" />
+            Only this window
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Keep which duplicate?</legend>
+          <label>
+            <input type="radio" name="strategy" value="keep-oldest" />
+            Oldest (longest untouched)
+          </label>
+          <label>
+            <input type="radio" name="strategy" value="keep-newest" />
+            Most recent
+          </label>
+        </fieldset>
+
+        <div class="toggles">
+          <label>
+            <input type="checkbox" name="includePinned" />
+            Include pinned tabs
+          </label>
+          <label>
+            <input type="checkbox" name="ignoreQuery" />
+            Ignore full URL
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="dedupe-button" class="primary">Close duplicates</button>
+        </div>
+      </form>
+
+      <section class="groups" aria-live="polite">
+        <header>
+          <h2>Duplicate sets</h2>
+          <p class="note" data-field="groups-note">Loading…</p>
+        </header>
+        <div id="empty-state" class="empty" hidden>
+          <p>No duplicates detected. Enjoy the calm tabs seas!</p>
+        </div>
+        <ul id="group-list" class="group-list"></ul>
+      </section>
+
+      <p id="status-text" role="status" aria-live="polite" class="status"></p>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
